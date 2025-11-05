@@ -1,57 +1,35 @@
 \documentclass[12pt]{report}
 
-\usepackage{cmap}
+
 \usepackage[T1,T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english, russian]{babel}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{dsfont}
-\usepackage{bm}
-\usepackage{diagbox}
-\usepackage[left=20mm,right=10mm,top=20mm,bottom=20mm,bindingoffset=2mm]{geometry}
-\usepackage{indentfirst}
-\usepackage[utf8]{inputenc}
-\usepackage{float}
-\usepackage[hidelinks]{hyperref}
+\usepackage{geometry}
+\geometry{left=25mm, right=20mm, top=20mm, bottom=20mm}
+
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{hyperref}
 \usepackage{xcolor}
-\usepackage{listings}
+
 \usepackage{minted}
-
-\DeclareMathOperator{\N}{\mathbb{N}}
-\DeclareMathOperator{\R}{\mathbb{R}}
-\DeclareMathOperator{\Z}{\mathbb{Z}}
-\DeclareMathOperator{\CC}{\mathbb{C}}
-\DeclareMathOperator{\PP}{\mathrm{P}}
-\DeclareMathOperator{\Expec}{\mathrm{E}}
-\DeclareMathOperator{\Var}{\mathrm{Var}}
-\DeclareMathOperator{\Cov}{\mathrm{Cov}}
-\DeclareMathOperator{\asConv}{\xrightarrow{a.s.}}
-\DeclareMathOperator{\LpConv}{\xrightarrow{Lp}}
-\DeclareMathOperator{\pConv}{\xrightarrow{p}}
-\DeclareMathOperator{\dConv}{\xrightarrow{d}}
-
-\hypersetup{
-	colorlinks=true,
-	linkcolor=blue,
-	citecolor=blue,
-	urlcolor=blue
-}
-
-\lstset{language=Python, extendedchars=\true}
-
-\lstdefinestyle{pythonstyle}{
-	language=Python,
-	backgroundcolor=\color{lightgray},
-	commentstyle=\color{green},
-	keywordstyle=\color{blue},
-	stringstyle=\color{red},
-	basicstyle=\ttfamily,
+\setminted{
+	fontsize=\small,
+	breaklines=true,
 	frame=single,
-	breaklines=true
+	bgcolor=gray!5
 }
+
+\usepackage{amsmath, amssymb}
+
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.5em}
+\renewcommand{\arraystretch}{1.2}
+\sloppy
 
 \begin{document}
 	
@@ -126,8 +104,59 @@
 	\end{figure}
 	\newpage
 	
-	\addcontentsline{toc}{section}{Информационная архитектура}
-	\section*{Информационная архитектура}
+	\addcontentsline{toc}{section}{Схема информационной архитектуры}
+	\section*{Схема информационной архитектуры}
 	
+	\renewcommand{\arraystretch}{1.2}
+	
+	\begin{longtable}{|p{0.35\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{Раздел / Уровень} & \textbf{Описание / Содержание} \\ \hline
+		\endfirsthead
+		\hline
+		\textbf{Раздел / Уровень} & \textbf{Описание / Содержание} \\ \hline
+		\endhead
+		
+		\textbf{Главная страница} &
+		Стартовая страница системы. Предлагает авторизацию пользователя (вход по логину и паролю). После успешного входа перенаправление в раздел «Личный кабинет». \\ \hline
+		
+		\hspace*{1em}Авторизация &
+		Форма входа: логин, пароль, выбор роли (если предусмотрено автоматическое определение — скрыто). Возможность восстановления пароля. \\ \hline
+		
+		\textbf{Личный кабинет} &
+		Главный раздел после входа в систему. Отображает индивидуальный интерфейс в зависимости от роли пользователя. \\ \hline
+		
+		\hspace*{1em}Роль: \textbf{Читатель} &
+		\RaggedRight
+		• \textbf{Читательский билет} — информация о статусе, номере, активных бронированиях.
+		• \textbf{Мои бронирования} — список активных и завершённых бронирований.
+		• \textbf{Мои штрафы} — начисленные и оплаченные штрафы. \\ \hline
+		
+		\hspace*{1em}Роль: \textbf{Библиотекарь} &
+		\RaggedRight
+		• \textbf{Список бронирований пользователей} — просмотр и управление заявками на бронирование.
+		• \textbf{Управление выдачами} — оформление и возврат книг пользователями. \\ \hline
+		
+		\hspace*{1em}Роль: \textbf{Администратор} &
+		\RaggedRight
+		• \textbf{Управление библиотекой} — редактирование информации о библиотеке, добавление/удаление материалов.
+		• \textbf{Управление пользователями} — просмотр и редактирование данных сотрудников и читателей. \\ \hline
+		
+		\textbf{Библиотеки} &
+		Раздел, доступный всем ролям (в том числе неавторизованным пользователям при необходимости). Содержит информацию о библиотеках, их сотрудниках и фондах. \\ \hline
+		
+		\hspace*{1em}Список библиотек &
+		Просмотр всех библиотек, подключённых к системе. Для каждой — название, адрес, контактная информация. \\ \hline
+		
+		\hspace*{2em}Информация о библиотеке &
+		Детальная карточка библиотеки: адрес, статус, количество сотрудников, часы работы. \\ \hline
+		
+		\hspace*{2em}Список сотрудников &
+		Отображает библиотекарей и администраторов, закреплённых за данной библиотекой. \\ \hline
+		
+		\hspace*{1em}Каталог материалов &
+		Доступный каталог всех изданий конкретной библиотеки. Возможен поиск, фильтрация, просмотр карточки книги (название, автор, год, язык, наличие). \\ \hline
+		
+		\end{longtable}
 	
 \end{document}
